@@ -17,3 +17,18 @@
     text-align: center;
     border: 1px solid black;
 }
+
+.pressed{
+    background-color: green;
+}
+
+.unit{
+    width: 30px;
+    height: 30px;
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    background: gold;
+    border: 2px solid black;
+    text-align: center;
+}

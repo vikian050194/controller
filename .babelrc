@@ -1,0 +1,6 @@
+{
+    "sourceMap": false,
+    "presets": [
+        "@babel/env"
+    ]
+}
