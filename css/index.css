@@ -28,7 +28,23 @@
     top: 0px;
     left: 0px;
     position: absolute;
-    background: gold;
+    background: gray;
     border: 2px solid black;
     text-align: center;
+}
+
+.color-a {
+    background-color: #f65314;
+}
+
+.color-y {
+    background-color: #7cbb00;
+}
+
+.color-x {
+    background-color: #00a1f1;
+}
+
+.color-b {
+    background-color: #ffbb00;
 }
