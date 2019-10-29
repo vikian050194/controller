@@ -1,15 +1,5 @@
 import Gamepad from "./gamepad";
-
-const standardGamepad = {
-    0: "b",
-    1: "a",
-    2: "y",
-    3: "x",
-    12: "up",
-    13: "down",
-    14: "left",
-    15: "right"
-};
+import standardGamepadMapping from "./mapping";
 
 export default class GamepadManager {
     constructor(onChange) {
@@ -57,9 +47,9 @@ export default class GamepadManager {
         this.getGamepads()
             .map(g => new Gamepad(g))
             .map(g => { return { index: g.index, buttons: g.getState().buttons }; })
-            .filter(({ buttons }) => buttons.some(b => b === 1))
+            .filter(({ buttons }) => buttons.some(b => b.pressed))
             .map(({ index, buttons }) => {
-                let actions = buttons.map((v, i) => v === 1 ? standardGamepad[i] : undefined).filter(a => a !== undefined);
+                let actions = buttons.map((b, i) => b.value === 1 ? standardGamepadMapping[i] : undefined).filter(a => a !== undefined);
                 let action = actions[0] || "no";
 
                 return { index, action };

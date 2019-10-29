@@ -27,7 +27,7 @@ export default class GamepadView {
 
     updateUnit(index, action) {
         const unit = document.getElementById(`u${index}`);
-        const delta = unit.clientWidth;
+        const delta = unit.offsetWidth;
 
         switch (action) {
             case "up":

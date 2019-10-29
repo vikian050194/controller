@@ -3,18 +3,18 @@ export default class Gamepad {
         this.gamepad = gamepad;
     }
 
-    getState(){
+    getState() {
         return {
             axes: this.gamepad.axes.map(axis => axis),
-            buttons: this.gamepad.buttons.map(({value}) => value)
+            buttons: this.gamepad.buttons.map(({ pressed, touched, value }) => { return { pressed, touched, value }; })
         };
     }
 
-    get id(){
+    get id() {
         return this.gamepad.id;
     }
 
-    get index(){
+    get index() {
         return this.gamepad.index;
     }
 }

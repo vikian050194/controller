@@ -1,4 +1,4 @@
-import Manager from "./manager";
+import Manager from "./gamepad/manager";
 import GamepadView from "./view";
 
 window.addEventListener("load", () => {
