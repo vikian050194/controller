@@ -1,6 +1,8 @@
-import Manager from "./gamepad/manager";
-import GamepadView from "./view";
+import GamepadManager from "./gamepad/manager";
+import KeyboardManager from "./keyboard/manager";
+import ControllerView from "./view";
 
 window.addEventListener("load", () => {
-    new Manager((payload) => { new GamepadView().onChange(payload); });
+    new GamepadManager((payload) => { new ControllerView().onChange(payload); });
+    new KeyboardManager((payload) => { new ControllerView().onChange(payload); });
 });

@@ -49,10 +49,9 @@ export default class GamepadManager {
             .map(g => { return { index: g.index, buttons: g.getState().buttons }; })
             .filter(({ buttons }) => buttons.some(b => b.pressed))
             .map(({ index, buttons }) => {
-                let actions = buttons.map((b, i) => b.value === 1 ? standardGamepadMapping[i] : undefined).filter(a => a !== undefined);
-                let action = actions[0] || "no";
+                let actions = buttons.map((b, i) => b.value === 1 ? standardGamepadMapping[i] : undefined).filter(a => a !== undefined) || [];
 
-                return { index, action };
+                return { index, actions };
             })
             .forEach(this.onChange);
     }

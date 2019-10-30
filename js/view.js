@@ -1,11 +1,11 @@
 export default class GamepadView {
-    onChange({ index, action }) {
+    onChange({ index, actions }) {
         const isNewUnit = document.getElementById(`u${index}`) === null;
 
         if (isNewUnit) {
             this.addUnit(index);
         } else {
-            this.updateUnit(index, action);
+            actions.forEach(a => this.updateUnit(index, a));
         }
     }
 
@@ -22,25 +22,36 @@ export default class GamepadView {
         let value = parseInt(currentValue.slice(0, -2));
         value += delta;
 
-        return `${value}px`;
+        return value;
     }
 
     updateUnit(index, action) {
         const unit = document.getElementById(`u${index}`);
-        const delta = unit.offsetWidth;
 
         switch (action) {
             case "up":
-                unit.style.top = this.updatePositionValue(unit.style.top, -delta);
+                if (unit.style.top !== "0px") {
+                    unit.style.top = `${this.updatePositionValue(unit.style.top, -unit.offsetHeight)}px`;
+                }
                 return;
             case "down":
-                unit.style.top = this.updatePositionValue(unit.style.top, delta);
+                // eslint-disable-next-line no-case-declarations
+                const newTopValue = this.updatePositionValue(unit.style.top, unit.offsetHeight);
+                if (newTopValue + unit.offsetHeight <= window.innerHeight) {
+                    unit.style.top = `${newTopValue}px`;
+                }
                 return;
             case "left":
-                unit.style.left = this.updatePositionValue(unit.style.left, -delta);
+                if (unit.style.left !== "0px") {
+                    unit.style.left = `${this.updatePositionValue(unit.style.left, -unit.offsetWidth)}px`;
+                }
                 return;
             case "right":
-                unit.style.left = this.updatePositionValue(unit.style.left, delta);
+                // eslint-disable-next-line no-case-declarations
+                const newLeftValue = this.updatePositionValue(unit.style.left, unit.offsetWidth);
+                if (newLeftValue + unit.offsetWidth <= window.innerWidth) {
+                    unit.style.left = `${newLeftValue}px`;
+                }
                 return;
             case "a":
             case "b":
