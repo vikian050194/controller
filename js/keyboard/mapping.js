@@ -1,5 +1,5 @@
 const standard = {
-    32: "b",
+    32: "a",
     38: "up",
     40: "down",
     37: "left",
