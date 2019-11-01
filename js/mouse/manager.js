@@ -6,8 +6,6 @@ export default class MouseManager {
         this.mouse = new Mouse();
 
         this.onChange = onChange;
-
-        setInterval(this.update.bind(this), 50);
     }
 
     update() {

@@ -1,10 +1,21 @@
+import { applyAnimation } from "./animation";
+
 export default class GamepadView {
+    constructor(dt) {
+        this.dt = dt;
+    }
+
     onChange({ index, actions }) {
         const isNewUnit = document.getElementById(`u${index}`) === null;
 
         if (isNewUnit) {
             this.addUnit(index);
         } else {
+            if (actions.length === 0) {
+                return;
+            }
+
+            console.info(actions);
             actions.forEach(a => this.updateUnit(index, a));
         }
     }
@@ -17,41 +28,21 @@ export default class GamepadView {
         document.getElementById("root").appendChild(unit);
     }
 
-    updatePositionValue(currentValue, delta) {
-        currentValue = currentValue || "0px";
-        let value = parseInt(currentValue.slice(0, -2));
-        value += delta;
-
-        return value;
-    }
-
     updateUnit(index, action) {
         const unit = document.getElementById(`u${index}`);
 
         switch (action) {
             case "up":
-                if (unit.style.top !== "0px") {
-                    unit.style.top = `${this.updatePositionValue(unit.style.top, -unit.offsetHeight)}px`;
-                }
+                applyAnimation(unit, this.dt, 0, -unit.offsetHeight);
                 return;
             case "down":
-                // eslint-disable-next-line no-case-declarations
-                const newTopValue = this.updatePositionValue(unit.style.top, unit.offsetHeight);
-                if (newTopValue + unit.offsetHeight <= window.innerHeight) {
-                    unit.style.top = `${newTopValue}px`;
-                }
+                applyAnimation(unit, this.dt, 0, unit.offsetHeight);
                 return;
             case "left":
-                if (unit.style.left !== "0px") {
-                    unit.style.left = `${this.updatePositionValue(unit.style.left, -unit.offsetWidth)}px`;
-                }
+                applyAnimation(unit, this.dt, -unit.offsetWidth, 0);
                 return;
             case "right":
-                // eslint-disable-next-line no-case-declarations
-                const newLeftValue = this.updatePositionValue(unit.style.left, unit.offsetWidth);
-                if (newLeftValue + unit.offsetWidth <= window.innerWidth) {
-                    unit.style.left = `${newLeftValue}px`;
-                }
+                applyAnimation(unit, this.dt, unit.offsetWidth, 0);
                 return;
             case "a":
             case "b":

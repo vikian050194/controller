@@ -10,8 +10,6 @@ export default class GamepadManager {
 
         window.addEventListener("gamepadconnected", this.connecthandler.bind(this));
         window.addEventListener("gamepaddisconnected", this.disconnecthandler.bind(this));
-
-        setInterval(this.update.bind(this), 50);
     }
 
     addgamepad(gamepad) {

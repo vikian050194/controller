@@ -6,8 +6,6 @@ export default class KeyboardManager {
         this.keyboard = new Keyboard();
 
         this.onChange = onChange;
-
-        setInterval(this.update.bind(this), 50);
     }
 
     update() {
