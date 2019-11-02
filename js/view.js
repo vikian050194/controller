@@ -1,4 +1,4 @@
-import { applyAnimation } from "./animation";
+import * as animation from "./animation";
 
 export default class GamepadView {
     constructor(dt) {
@@ -16,7 +16,7 @@ export default class GamepadView {
             }
 
             console.info(actions);
-            actions.forEach(a => this.updateUnit(index, a));
+            this.updateUnit(index, actions);
         }
     }
 
@@ -28,32 +28,41 @@ export default class GamepadView {
         document.getElementById("root").appendChild(unit);
     }
 
-    updateUnit(index, action) {
+    updateUnit(index, actions) {
         const unit = document.getElementById(`u${index}`);
 
-        switch (action) {
-            case "up":
-                applyAnimation(unit, this.dt, 0, -unit.offsetHeight);
-                return;
-            case "down":
-                applyAnimation(unit, this.dt, 0, unit.offsetHeight);
-                return;
-            case "left":
-                applyAnimation(unit, this.dt, -unit.offsetWidth, 0);
-                return;
-            case "right":
-                applyAnimation(unit, this.dt, unit.offsetWidth, 0);
-                return;
-            case "a":
-            case "b":
-            case "x":
-            case "y":
-                unit.classList.remove("color-a");
-                unit.classList.remove("color-b");
-                unit.classList.remove("color-x");
-                unit.classList.remove("color-y");
-                unit.classList.add(`color-${action}`);
-                break;
-        }
+        const movement = actions.reduce((acc, a) => {
+            switch (a) {
+                case "up":
+                    acc.dy = -unit.offsetHeight;
+                    return acc;
+                case "down":
+                    acc.dy = unit.offsetHeight;
+                    return acc;
+                case "left":
+                    acc.dx = -unit.offsetWidth;
+                    return acc;
+                case "right":
+                    acc.dx = unit.offsetWidth;
+                    return acc;
+            }
+        }, { dx: 0, dy: 0 }) || { dx: 0, dy: 0 };
+
+        animation.applyMovement(unit, movement.dx, movement.dy);
+
+        actions.forEach(a => {
+            switch (a) {
+                case "a":
+                case "b":
+                case "x":
+                case "y":
+                    unit.classList.remove("color-a");
+                    unit.classList.remove("color-b");
+                    unit.classList.remove("color-x");
+                    unit.classList.remove("color-y");
+                    unit.classList.add(`color-${a}`);
+                    break;
+            }
+        });
     }
 }

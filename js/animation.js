@@ -5,15 +5,28 @@ const updatePositionValue = (currentValue, delta) => {
     return `${value}px`;
 };
 
-const applyAnimation = (element, dt, dx, dy) => {
+let count = 0;
+
+const calculateMovement = (element, dx, dy) => {
     const top = element.style.top || "0px";
     const left = element.style.left || "0px";
 
     const newTop = updatePositionValue(top, dy);
     const newLeft = updatePositionValue(left, dx);
 
+    return { top, left, newTop, newLeft };
+};
+
+const applyMovement = (element, dx, dy) => {
+    const { newTop, newLeft } = calculateMovement(element, dx, dy);
+    element.style.top = newTop;
+    element.style.left = newLeft;
+};
+
+const applyAnimation = (element, dt, dx, dy) => {
     element.offsetHeight;
-    console.info(element.style.top);
+    const { top, left, newTop, newLeft } = calculateMovement(element, dx, dy);
+
     element.animate([
         {
             top,
@@ -26,10 +39,9 @@ const applyAnimation = (element, dt, dx, dy) => {
     ], {
         duration: dt
     }).onfinish = () => {
-        console.info(element.style.top + "finished");
         element.style.top = newTop;
         element.style.left = newLeft;
     };
 };
 
-export { applyAnimation };
+export { applyAnimation, applyMovement };
