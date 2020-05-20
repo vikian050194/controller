@@ -9,7 +9,7 @@
     "release": "webpack --config webpack.production.config.js"
   },
   "engines": {
-    "node": "^8.9.4"
+    "node": "^12.16.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.4",
