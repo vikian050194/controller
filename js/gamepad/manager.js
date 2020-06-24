@@ -51,6 +51,12 @@ export default class GamepadManager {
 
                 return { index, actions };
             })
-            .forEach(this.onChange);
+            .forEach(({ index, actions }) => {
+                if (actions.length === 0) {
+                    return;
+                }
+                
+                this.onChange({ index, actions });
+            }, this);
     }
 }

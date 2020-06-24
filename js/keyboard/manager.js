@@ -13,6 +13,10 @@ export default class KeyboardManager {
 
         let actions = buttons.map(({index}) => standardKeyboardMapping[index]).filter(a => a !== undefined) || [];
 
+        if(actions.length === 0){
+            return;
+        }
+
         this.onChange({ index: this.keyboard.index, actions });
     }
 }
