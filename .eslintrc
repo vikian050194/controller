@@ -8,14 +8,15 @@
     },
     "extends": "eslint:recommended",
     "env": {
-        "browser": true
+        "browser": true,
+        "node": true
     },
     "rules": {
         "quotes": [ "error", "double" ],
         "semi": [ "error", "always" ],
         "indent": [ "error", 4, { "SwitchCase": 1 } ],
         "no-multiple-empty-lines": [ "error", { "max": 1 } ],
-        "linebreak-style": [ "error", "windows"],
+        "linebreak-style": [ "error", "unix"],
         "no-console": [ "warn", { "allow": [ "info", "error" ] } ],
         "comma-dangle": ["error", "never"]
     }

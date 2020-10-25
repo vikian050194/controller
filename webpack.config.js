@@ -1,9 +1,12 @@
 const path = require("path");
+const CopyPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+const buildFolderName = "public";
 
 module.exports = {
     mode: "development",
-    entry: ["./js/index.js", "./build.js"],
+    entry: ["./js/index.js", "./css/index.css"],
     devtool: "inline-source-map",
     module: {
         rules: [
@@ -25,7 +28,7 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(jpg|jpeg|gif|png|ico)$/,
+                test: /\.(svg)$/,
                 loader: "file-loader",
                 options: {
                     limit: 1024,
@@ -44,17 +47,23 @@ module.exports = {
     },
     output: {
         filename: "bundle.js",
-        path: path.resolve(__dirname, "build"),
+        path: path.resolve(__dirname, buildFolderName),
         publicPath: "/"
     },
     plugins: [
         new MiniCssExtractPlugin({
             filename: "bundle.css"
+        }),
+        new CopyPlugin({
+            patterns: [
+                { from: "index.html" },
+                { from: "favicon.svg" }
+            ]
         })
     ],
     devServer: {
-        index: path.resolve(__dirname, "index.html"),
-        contentBase: path.resolve(__dirname, "build"),
+        index: path.resolve(__dirname, buildFolderName, "index.html"),
+        contentBase: path.resolve(__dirname, buildFolderName),
         publicPath: "/",
         port: 8080,
         watchContentBase: false,
